@@ -28,6 +28,4 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## usage
 
-modify your .env or config/database.php 
-then 
-	php artisan migrate
+modify your `.env` or `config/database.php` then `php artisan migrate`
