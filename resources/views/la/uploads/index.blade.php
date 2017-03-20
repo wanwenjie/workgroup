@@ -1,8 +1,8 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Uploads")
+@section("contentheader_title", "上传文件")
 @section("contentheader_description", "Uploaded images & files")
-@section("section", "Uploads")
+@section("section", "上传文件")
 @section("sub_section", "Listing")
 @section("htmlheader_title", "Uploaded images & files")
 
