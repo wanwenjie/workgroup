@@ -77,4 +77,7 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	/* ================== group ================== */
 	Route::get(config('laraadmin.adminRoute') . '/add_group', 'LA\GroupController@add');
 	Route::get(config('laraadmin.adminRoute') . '/search_group', 'LA\GroupController@search');
+
+	/* ================== 任务分配 ================== */
+	Route::get(config('laraadmin.adminRoute') . '/assign', 'LA\GroupController@assign');
 });

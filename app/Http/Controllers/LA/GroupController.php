@@ -15,4 +15,8 @@ class GroupController extends Controller{
     	return view('la.group.search');
     }
     
+
+    public function assign() {
+    	return view('la.group.assign');
+    }
 }
