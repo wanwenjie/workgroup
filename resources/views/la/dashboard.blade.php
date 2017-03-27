@@ -1,13 +1,14 @@
 @extends('la.layouts.app')
 
-@section('htmlheader_title') Dashboard @endsection
-@section('contentheader_title') Dashboard @endsection
-@section('contentheader_description') Organisation Overview @endsection
+@section('htmlheader_title') 仪表盘 @endsection
+@section('contentheader_title') 仪表盘 @endsection
+@section('contentheader_description') 模块视图 @endsection
 
+{{--主界面--}}
 @section('main-content')
-<!-- Main content -->
+<!-- 在app.balde中添加的界面 -->
         <section class="content">
-          <!-- Small boxes (Stat box) -->
+          <!-- 中间部分的小盒子 -->
           <div class="row">
             <div class="col-lg-3 col-xs-6">
               <!-- small box -->
@@ -62,17 +63,18 @@
               </div>
             </div><!-- ./col -->
           </div><!-- /.row -->
-          <!-- Main row -->
+          <!-- 中间主框的左侧 部分-->
           <div class="row">
             <!-- Left col -->
             <section class="col-lg-7 connectedSortable">
               <!-- Custom tabs (Charts with tabs)-->
+                {{--销售情况的图表--}}
               <div class="nav-tabs-custom">
                 <!-- Tabs within a box -->
                 <ul class="nav nav-tabs pull-right">
-                  <li class="active"><a href="#revenue-chart" data-toggle="tab">Area</a></li>
-                  <li><a href="#sales-chart" data-toggle="tab">Donut</a></li>
-                  <li class="pull-left header"><i class="fa fa-inbox"></i> Sales</li>
+                  <li class="active"><a href="#revenue-chart" data-toggle="tab">折线图</a></li>
+                  <li><a href="#sales-chart" data-toggle="tab">饼状图</a></li>
+                  <li class="pull-left header"><i class="fa fa-inbox"></i> 销售情况</li>
                 </ul>
                 <div class="tab-content no-padding">
                   <!-- Morris chart - Sales -->
@@ -82,10 +84,11 @@
               </div><!-- /.nav-tabs-custom -->
 
               <!-- Chat box -->
+                {{--聊天界面--}}
               <div class="box box-success">
                 <div class="box-header">
                   <i class="fa fa-comments-o"></i>
-                  <h3 class="box-title">Chat</h3>
+                  <h3 class="box-title">聊天</h3>
                   <div class="box-tools pull-right" data-toggle="tooltip" title="Status">
                     <div class="btn-group" data-toggle="btn-toggle" >
                       <button type="button" class="btn btn-default btn-sm active"><i class="fa fa-square text-green"></i></button>
@@ -100,19 +103,17 @@
                     <p class="message">
                       <a href="#" class="name">
                         <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 2:15</small>
-                        Mike Doe
+                        姚来刚
                       </a>
-                      I would like to meet you to discuss the latest news about
-                      the arrival of the new theme. They say it is going to be one the
-                      best themes on the market
+                        我想见到你，讨论最新消息。新思路想出来了。 他们说这个主意在市场上应该是最好的
                     </p>
                     <div class="attachment">
-                      <h4>Attachments:</h4>
+                      <h4>附加文件:</h4>
                       <p class="filename">
                         Theme-thumbnail-image.jpg
                       </p>
                       <div class="pull-right">
-                        <button class="btn btn-primary btn-sm btn-flat">Open</button>
+                        <button class="btn btn-primary btn-sm btn-flat">打开</button>
                       </div>
                     </div><!-- /.attachment -->
                   </div><!-- /.item -->
@@ -122,11 +123,9 @@
                     <p class="message">
                       <a href="#" class="name">
                         <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:15</small>
-                        Alexander Pierce
+                        万文杰
                       </a>
-                      I would like to meet you to discuss the latest news about
-                      the arrival of the new theme. They say it is going to be one the
-                      best themes on the market
+                      很高兴能和你一起讨论新的想法，我觉得这肯定是最好的想法
                     </p>
                   </div><!-- /.item -->
                   <!-- chat item -->
@@ -135,11 +134,9 @@
                     <p class="message">
                       <a href="#" class="name">
                         <small class="text-muted pull-right"><i class="fa fa-clock-o"></i> 5:30</small>
-                        Susan Doe
+                        王贺
                       </a>
-                      I would like to meet you to discuss the latest news about
-                      the arrival of the new theme. They say it is going to be one the
-                      best themes on the market
+                      我将去寻找你们去讨论最新的主意
                     </p>
                   </div><!-- /.item -->
                 </div><!-- /.chat -->
@@ -155,11 +152,11 @@
 
              
 
-              <!-- quick email widget -->
+              <!-- 快捷邮箱 -->
               <div class="box box-info">
                 <div class="box-header">
                   <i class="fa fa-envelope"></i>
-                  <h3 class="box-title">Quick Email</h3>
+                  <h3 class="box-title">快捷邮箱</h3>
                   <!-- tools box -->
                   <div class="pull-right box-tools">
                     <button class="btn btn-info btn-sm" data-widget="remove" data-toggle="tooltip" title="Remove"><i class="fa fa-times"></i></button>
@@ -184,7 +181,7 @@
               </div>
 
             </section><!-- /.Left col -->
-            <!-- right col (We are only adding the ID to make the widgets sortable)-->
+            <!-- 中间右侧部分 (We are only adding the ID to make the widgets sortable)-->
             <section class="col-lg-5 connectedSortable">
 
               <!-- Map box -->

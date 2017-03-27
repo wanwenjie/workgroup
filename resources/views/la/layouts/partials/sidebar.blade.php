@@ -1,24 +1,25 @@
-<!-- Left side column. contains the logo and sidebar -->
+<!-- 左侧列。 包含徽标和侧边栏 -->
 <aside class="main-sidebar">
 
     <!-- sidebar: style can be found in sidebar.less -->
     <section class="sidebar">
 
-        <!-- Sidebar user panel (optional) -->
+        <!-- 侧栏用户面板（可选） -->
         @if (! Auth::guest())
             <div class="user-panel">
                 <div class="pull-left image">
                     <img src="{{ Gravatar::fallback(asset('la-assets/img/user2-160x160.jpg'))->get(Auth::user()->email) }}" class="img-circle" alt="User Image" />
                 </div>
                 <div class="pull-left info">
+                    {{--user的名字，由model提供--}}
                     <p>{{ Auth::user()->name }}</p>
                     <!-- Status -->
-                    <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                    <a href="#"><i class="fa fa-circle text-success"></i> 在线</a>
                 </div>
             </div>
         @endif
 
-        <!-- search form (Optional) -->
+        <!-- 搜索框，可选 -->
         @if(LAConfigs::getByKey('sidebar_search'))
         <form action="/admin/search_group" method="get" class="sidebar-form">
             <div class="input-group">
@@ -33,14 +34,15 @@
         @endif
         <!-- /.search form -->
 
-        <!-- Sidebar Menu -->
+        <!-- 侧边的菜单 -->
         <ul class="sidebar-menu">
-            <li class="header">MODULES</li>
+            <li class="header">模块</li>
             <!-- Optionally, you can add icons to the links -->
             <li><a href="{{ url(config('laraadmin.adminRoute')) }}"><i class='fa fa-home'></i> <span>概览</span></a></li>
             <?php
             $menuItems = Dwij\Laraadmin\Models\Menu::where("parent", 0)->orderBy('hierarchy', 'asc')->get();
             ?>
+
             @foreach ($menuItems as $menu)
                 @if($menu->type == "module")
                     <?php
