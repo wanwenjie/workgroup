@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title")
-	<a href="{{ url(config('laraadmin.adminRoute') . '/departments') }}">Departments</a> :
+	<a href="{{ url(config('laraadmin.adminRoute') . '/groups') }}">Group</a> :
 @endsection
-@section("contentheader_description", $department->$view_col)
-@section("section", "Departments")
-@section("section_url", url(config('laraadmin.adminRoute') . '/departments'))
+@section("contentheader_description", $group->$view_col)
+@section("section", "Groups")
+@section("section_url", url(config('laraadmin.adminRoute') . '/groups'))
 @section("sub_section", "Edit")
 
-@section("htmlheader_title", "Department Edit : ".$department->$view_col)
+@section("htmlheader_title", "Groups Edit : ".$group->$view_col)
 
 @section("main-content")
 
@@ -29,7 +29,7 @@
 	<div class="box-body">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
-				{!! Form::model($department, ['route' => [config('laraadmin.adminRoute') . '.departments.update', $department->id ], 'method'=>'PUT', 'id' => 'department-edit-form']) !!}
+				{!! Form::model($group, ['route' => [config('laraadmin.adminRoute') . '.groups.update', $group->id ], 'method'=>'PUT', 'id' => 'group-edit-form']) !!}
 					@la_form($module)
 					
 					{{--
@@ -39,7 +39,7 @@
 					--}}
                     <br>
 					<div class="form-group">
-						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/departments') }}">Cancel</a></button>
+						{!! Form::submit( 'Update', ['class'=>'btn btn-success']) !!} <button class="btn btn-default pull-right"><a href="{{ url(config('laraadmin.adminRoute') . '/groups') }}">Cancel</a></button>
 					</div>
 				{!! Form::close() !!}
 			</div>
@@ -52,7 +52,7 @@
 @push('scripts')
 <script>
 $(function () {
-	$("#department-edit-form").validate({
+	$("#group-edit-form").validate({
 		
 	});
 });

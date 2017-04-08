@@ -80,7 +80,7 @@
 						@la_display($module, 'mobile')
 						@la_display($module, 'mobile2')
 						@la_display($module, 'email')
-						@la_display($module, 'dept')
+						@la_display($module, 'group')
 						@la_display($module, 'city')
 						@la_display($module, 'address')
 						@la_display($module, 'about')

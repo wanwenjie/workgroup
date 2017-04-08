@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
-@section("contentheader_title", "Departments")
-@section("contentheader_description", "departments listing")
-@section("section", "Departments")
+@section("contentheader_title", "Groups")
+@section("contentheader_description", "Groups listing")
+@section("section", "Groups")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Departments Listing")
+@section("htmlheader_title", "Groups Listing")
 
 @section("headerElems")
-@la_access("Departments", "create")
-	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Add Department</button>
+@la_access("Groups", "create")
+	<button class="btn btn-success btn-sm pull-right" data-toggle="modal" data-target="#AddModal">Add Group</button>
 @endla_access
 @endsection
 
@@ -45,15 +45,15 @@
 	</div>
 </div>
 
-@la_access("Departments", "create")
+@la_access("Groups", "create")
 <div class="modal fade" id="AddModal" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h4 class="modal-title" id="myModalLabel">Add Department</h4>
+				<h4 class="modal-title" id="myModalLabel">Add Group</h4>
 			</div>
-			{!! Form::open(['action' => 'LA\DepartmentsController@store', 'id' => 'department-add-form']) !!}
+			{!! Form::open(['action' => 'LA\GroupsController@store', 'id' => 'group-add-form']) !!}
 			<div class="modal-body">
 				<div class="box-body">
                     @la_form($module)
@@ -88,7 +88,7 @@ $(function () {
 	$("#example1").DataTable({
 		processing: true,
         serverSide: true,
-        ajax: "{{ url(config('laraadmin.adminRoute') . '/department_dt_ajax') }}",
+        ajax: "{{ url(config('laraadmin.adminRoute') . '/group_dt_ajax') }}",
 		language: {
 			lengthMenu: "_MENU_",
 			search: "_INPUT_",
@@ -98,7 +98,7 @@ $(function () {
 		columnDefs: [ { orderable: false, targets: [-1] }],
 		@endif
 	});
-	$("#department-add-form").validate({
+	$("#group-add-form").validate({
 		
 	});
 });
