@@ -52,11 +52,11 @@
 						@if(isset($module->id) && $module->name == $menu->name)
                         	<?php echo LAHelper::print_menu($menu ,true); ?>
 						@else
-							<?php echo LAHelper::print_menu($menu); ?>
+							<?php echo LAHelper::print_menu($menu);?>
 						@endif
                     @endla_access
                 @else
-                    <?php echo LAHelper::print_menu($menu); ?>
+                    <?php echo LAHelper::print_menu($menu);?>
                 @endif
             @endforeach
             <!-- LAMenus -->
