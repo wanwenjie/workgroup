@@ -113,7 +113,7 @@
 						@la_display($module, 'display_name')
 						@la_display($module, 'description')
 						@la_display($module, 'parent')
-						@la_display($module, 'dept')
+						@la_display($module, 'group')
 					</div>
 				</div>
 			</div>

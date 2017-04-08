@@ -52,9 +52,16 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 	Route::get(config('laraadmin.adminRoute') . '/permission_dt_ajax', 'LA\PermissionsController@dtajax');
 	Route::post(config('laraadmin.adminRoute') . '/save_permissions/{id}', 'LA\PermissionsController@save_permissions');
 	
-	/* ================== Departments ================== */
-	Route::resource(config('laraadmin.adminRoute') . '/departments', 'LA\DepartmentsController');
-	Route::get(config('laraadmin.adminRoute') . '/department_dt_ajax', 'LA\DepartmentsController@dtajax');
+	/* ================== Groups ================== */
+	Route::resource(config('laraadmin.adminRoute') . '/groups', 'LA\GroupsController');
+	Route::get(config('laraadmin.adminRoute') . '/department_dt_ajax', 'LA\GroupsController@dtajax');
+	Route::get(config('laraadmin.adminRoute') . '/add_group', 'LA\GroupsController@add');
+	Route::get(config('laraadmin.adminRoute') . '/search_group', 'LA\GroupsController@search');
+
+
+	/* ================== assign ================== */
+	Route::get(config('laraadmin.adminRoute') . '/assign', 'LA\GroupsController@assign');
+
 	
 	/* ================== Employees ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/employees', 'LA\EmployeesController');
@@ -73,11 +80,7 @@ Route::group(['as' => $as, 'middleware' => ['auth', 'permission:ADMIN_PANEL']], 
 
 	/* ================== chat ================== */
 	Route::get(config('laraadmin.adminRoute') . '/chat', 'LA\ChatController@index');
+	
 
-	/* ================== group ================== */
-	Route::get(config('laraadmin.adminRoute') . '/add_group', 'LA\GroupController@add');
-	Route::get(config('laraadmin.adminRoute') . '/search_group', 'LA\GroupController@search');
-
-	/* ================== 任务分配 ================== */
-	Route::get(config('laraadmin.adminRoute') . '/assign', 'LA\GroupController@assign');
+	
 });
