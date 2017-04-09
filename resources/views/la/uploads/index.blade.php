@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title", "上传文件")
-@section("contentheader_description", "Uploaded images & files")
+@section("contentheader_description", "已上传文件/图片")
 @section("section", "上传文件")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Uploaded images & files")
+@section("htmlheader_title", "已上传文件/图片")
 
 @section("headerElems")
 @la_access("Uploads", "create")
-	<button id="AddNewUploads" class="btn btn-success btn-sm pull-right">Add New</button>
+	<button id="AddNewUploads" class="btn btn-success btn-sm pull-right">添加新文件</button>
 @endla_access
 @endsection
 
@@ -27,7 +27,7 @@
 <form action="{{ url(config('laraadmin.adminRoute') . '/upload_files') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
     <a id="closeDZ1"><i class="fa fa-times"></i></a>
-    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Drop files here to upload</div>
+    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>将文件拖拽至此以上传</div>
 </form>
 
 <div class="box box-success">
@@ -46,8 +46,10 @@
         <small>example</small>
       </h1>
 </section>
-
+{{--下面给的只是一个例子，具体内容需要自己更改--}}
+{{--这里的文件上传有问题--}}
 <!-- 上传文件时间线 -->
+{{--需要用blade模板引擎获取--}}
 <section class="content">
 
       <!-- row -->
