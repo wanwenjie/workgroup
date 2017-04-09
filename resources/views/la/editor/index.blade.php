@@ -8,7 +8,7 @@
 <div id="laeditor" class="row">
 	<div class="col-md-2 col-sm-3">
 		<div class="la-header">
-			LA Editor
+			群组文件操作
 			<!--<div class="la-dir">/Applications/MAMP/htdocs</div>-->
 		</div>
 		<div class="la-file-tree">
@@ -43,7 +43,8 @@ var $laetabs = $(".laeditor-tabs");
 $(function () {
 	// Start Jquery File Tree
 	$('.la-file-tree').fileTree({
-		root: '/',
+//        此处更改组目录
+		root: '../',
 		script: "{{ url(config('laraadmin.adminRoute') . '/laeditor_get_dir?_token=' . csrf_token()) }}"
 	}, function(file) {
 		openFile(file);
