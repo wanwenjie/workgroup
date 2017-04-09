@@ -246,4 +246,13 @@ class GroupsController extends Controller
 		$out->setData($data);
 		return $out;
 	}
+
+
+	public function add(){
+		return view('la.groups.add');
+	}
+
+	public function search() {
+		return view('la.groups.search');
+	}
 }
