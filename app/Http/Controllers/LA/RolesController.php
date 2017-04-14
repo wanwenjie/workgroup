@@ -25,7 +25,7 @@ class RolesController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'display_name', 'parent', 'group'];
+	public $listing_cols = ['id', 'name', 'display_name', 'parent'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns

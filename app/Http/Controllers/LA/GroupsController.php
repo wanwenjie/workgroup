@@ -255,4 +255,9 @@ class GroupsController extends Controller
 	public function search() {
 		return view('la.groups.search');
 	}
+
+	public function assign() {
+
+		return view('la.groups.assign');
+	}
 }

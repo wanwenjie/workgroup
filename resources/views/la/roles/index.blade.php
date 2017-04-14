@@ -60,7 +60,6 @@
 					@la_input($module, 'display_name')
 					@la_input($module, 'description')
 					@la_input($module, 'parent')
-					@la_input($module, 'group')
 				</div>
 			</div>
 			<div class="modal-footer">

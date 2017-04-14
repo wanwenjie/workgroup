@@ -6,6 +6,7 @@
 
 
 @section('main-content')
+
 <div id="page-content" class="profile2">
 	<div class="bg-primary clearfix">
 		<div class="col-md-4">
@@ -30,56 +31,7 @@
 			<div class="dats1"><i class="fa fa-envelope-o"></i> superadmin@gmail.com</div>
 			<div class="dats1"><i class="fa fa-map-marker"></i> Pune, India</div>
 		</div>
-		<div class="col-md-4">
-			<!--
-			<div class="teamview">
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user1-128x128.jpg') }}" alt=""><i class="status-online"></i></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user2-160x160.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user3-128x128.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user4-128x128.jpg') }}" alt=""><i class="status-online"></i></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user5-128x128.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user6-128x128.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user7-128x128.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user8-128x128.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user5-128x128.jpg') }}" alt=""></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user6-128x128.jpg') }}" alt=""><i class="status-online"></i></a>
-				<a class="face" data-toggle="tooltip" data-placement="top" title="John Doe"><img src="{{ asset('la-assets/img/user7-128x128.jpg') }}" alt=""></a>
-			</div>
-			-->
-			<div class="dats1 pb">
-				<div class="clearfix">
-					<span class="pull-left">Task #1</span>
-					<small class="pull-right">20%</small>
-				</div>
-				<div class="progress progress-xs active">
-					<div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 20%" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">
-						<span class="sr-only">20% Complete</span>
-					</div>
-				</div>
-			</div>
-			<div class="dats1 pb">
-				<div class="clearfix">
-					<span class="pull-left">Task #2</span>
-					<small class="pull-right">90%</small>
-				</div>
-				<div class="progress progress-xs active">
-					<div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 90%" role="progressbar" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">
-						<span class="sr-only">90% Complete</span>
-					</div>
-				</div>
-			</div>
-			<div class="dats1 pb">
-				<div class="clearfix">
-					<span class="pull-left">Task #3</span>
-					<small class="pull-right">60%</small>
-				</div>
-				<div class="progress progress-xs active">
-					<div class="progress-bar progress-bar-warning progress-bar-striped" style="width: 60%" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100">
-						<span class="sr-only">60% Complete</span>
-					</div>
-				</div>
-			</div>
-		</div>
+
 		<div class="col-md-1 actions">
 			@la_access("Organizations", "edit")
 				<a href="{{ url(config('laraadmin.adminRoute') . '/organizations/'.$organization->id.'/edit') }}" class="btn btn-xs btn-edit btn-default"><i class="fa fa-pencil"></i></a><br>
@@ -122,6 +74,112 @@
 				</div>
 			</div>
 		</div>
+		 <!-- TO DO List -->
+              <div class="box box-primary">
+                <div class="box-header">
+                  <i class="ion ion-clipboard"></i>
+                  <h3 class="box-title">To Do List</h3>
+                  <div class="box-tools pull-right">
+                    <ul class="pagination pagination-sm inline">
+                      <li><a href="#">&laquo;</a></li>
+                      <li><a href="#">1</a></li>
+                      <li><a href="#">2</a></li>
+                      <li><a href="#">3</a></li>
+                      <li><a href="#">&raquo;</a></li>
+                    </ul>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body">
+                  <ul class="todo-list">
+                    <li>
+                      <!-- drag handle -->
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <!-- checkbox -->
+                      <input type="checkbox" value="" name="">
+                      <!-- todo text -->
+                      <span class="text">Design a nice theme</span>
+                      <!-- Emphasis label -->
+                      <small class="label label-danger"><i class="fa fa-clock-o"></i> 2 mins</small>
+                      <!-- General tools such as edit or delete-->
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Make the theme responsive</span>
+                      <small class="label label-info"><i class="fa fa-clock-o"></i> 4 hours</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Let theme shine like a star</span>
+                      <small class="label label-warning"><i class="fa fa-clock-o"></i> 1 day</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Let theme shine like a star</span>
+                      <small class="label label-success"><i class="fa fa-clock-o"></i> 3 days</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Check your messages and notifications</span>
+                      <small class="label label-primary"><i class="fa fa-clock-o"></i> 1 week</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                    <li>
+                      <span class="handle">
+                        <i class="fa fa-ellipsis-v"></i>
+                        <i class="fa fa-ellipsis-v"></i>
+                      </span>
+                      <input type="checkbox" value="" name="">
+                      <span class="text">Let theme shine like a star</span>
+                      <small class="label label-default"><i class="fa fa-clock-o"></i> 1 month</small>
+                      <div class="tools">
+                        <i class="fa fa-edit"></i>
+                        <i class="fa fa-trash-o"></i>
+                      </div>
+                    </li>
+                  </ul>
+                </div><!-- /.box-body -->
+                <div class="box-footer clearfix no-border">
+                  <button class="btn btn-default pull-right"><i class="fa fa-plus"></i> Add item</button>
+                </div>
+              </div><!-- /.box -->
 		<div role="tabpanel" class="tab-pane fade in p20 bg-white" id="tab-timeline">
 			<ul class="timeline timeline-inverse">
 				<!-- timeline time label -->
@@ -221,4 +279,5 @@
 	</div>
 	</div>
 </div>
+
 @endsection
