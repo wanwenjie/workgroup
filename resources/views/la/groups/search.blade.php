@@ -13,7 +13,7 @@
       <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
     </div>
     <!-- /.widget-user-image -->
-    <h3 class="widget-user-username">鹦鹉螺团队</h3>
+    <h3 class="widget-user-username">{{var_dump($groups)}}</h3>
     <h5 class="widget-user-desc">有理想有抱负的热血青年</h5>
     <button type="button" class="btn bg-olive btn-flat">申请加入</button>
   </div>
