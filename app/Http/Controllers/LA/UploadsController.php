@@ -9,6 +9,7 @@ namespace App\Http\Controllers\LA;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 use Illuminate\Support\Facades\Input;
@@ -56,12 +57,15 @@ class UploadsController extends Controller
 	public function index()
 	{
 		$module = Module::get('Uploads');
-		
+		$users = User::get();
+        $imgs = Upload::get();
 		if(Module::hasAccess($module->id)) {
 			return View('la.uploads.index', [
 				'show_actions' => $this->show_action,
 				'listing_cols' => $this->listing_cols,
-				'module' => $module
+				'module' => $module,
+                'users' => $users,
+                'imgs' => $imgs
 			]);
 		} else {
             return redirect(config('laraadmin.adminRoute')."/");

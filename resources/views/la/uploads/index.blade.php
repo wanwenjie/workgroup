@@ -46,6 +46,29 @@
         <small>example</small>
       </h1>
 </section>
+<?php
+    //$usrs=\Illuminate\Foundation\Auth\User::get();
+//    dd($usrs);
+//    function get_extension($file_name){
+//        return substr(strrchr($file_name, '.'), 1);
+//    }
+    //foreach ($usrs as $user){
+//        echo $user['id']."<br/>";
+       // $img = \App\Models\Upload::where('user_id',$user['id'])->first();
+        //if(!empty($img)){
+//            echo "用户名：".$user['name'].'<br>'."图片名:".$img->name."<br>"."图片路径".$img->path;
+//            echo "<br>文件后缀:".$img->extension;
+//            echo "<br>".time()."<br>".strtotime($img->created_at);
+//            $day = (time()-strtotime($img->created_at))/(60*60*24);
+//            echo "<br>".(floor($day));
+        //}
+    //}
+
+
+?>
+
+
+
 {{--下面给的只是一个例子，具体内容需要自己更改--}}
 {{--这里的文件上传有问题--}}
 <!-- 上传文件时间线 -->
@@ -57,14 +80,53 @@
         <div class="col-md-12">
           <!-- The time line -->
           <ul class="timeline">
+          @foreach($imgs as $img)
+              @foreach($users as $usr)
+                  @if($usr['id']==$img['user_id'])
+                      {{--找到匹配的文件和对应的路径--}}
+                      @if($img->extension=='jpg')
+                          {{--图片时间线样式--}}
+                              <li class="time-label">
+                                      <span class="bg-red">
+                                        {{$img->updated_at}}
+                                      </span>
+                              </li>
+                              <li>
+                                  <i class="fa fa-camera bg-purple"></i>
+
+                                  <div class="timeline-item">
+                                      <span class="time"><i class="fa fa-clock-o"></i> {{floor((time()-strtotime($img->created_at))/(60*60*24))}} days ago</span>
+
+                                      <h3 class="timeline-header"><a href="#">{{$usr->name}}</a> uploaded new photos</h3>
+
+                                      <div class="timeline-body">
+                                          <img src="{{ url('files/'.$img->hash.'/'.$img->name)}}" alt="{{ $img->caption }}" class="margin">
+                                      </div>
+                                  </div>
+                              </li>
+                      @endif
+                  @endif
+              @endforeach
+          @endforeach
+
+
+
+
+
+
+
+
+                {{--**********************************华丽的分割线，下面是妖艳的贱货********************************--}}
             <!-- timeline time label -->
             <li class="time-label">
                   <span class="bg-red">
-                    10 Feb. 2014
+                    {{date("Y-m-d H")}}
                   </span>
             </li>
             <!-- /.timeline-label -->
-            <!-- timeline item -->
+
+
+            <!-- timeline item  这是一个邮件-->
             <li>
               <i class="fa fa-envelope bg-blue"></i>
 
@@ -86,6 +148,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-user bg-aqua"></i>
@@ -97,6 +161,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-comments bg-yellow"></i>
@@ -117,6 +183,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline time label -->
             <li class="time-label">
                   <span class="bg-green">
@@ -124,6 +192,8 @@
                   </span>
             </li>
             <!-- /.timeline-label -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-camera bg-purple"></i>
@@ -142,6 +212,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-video-camera bg-maroon"></i>
