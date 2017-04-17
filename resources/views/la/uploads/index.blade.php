@@ -47,22 +47,29 @@
       </h1>
 </section>
 <?php
-    //$usrs=\Illuminate\Foundation\Auth\User::get();
+    $usrs=\Illuminate\Foundation\Auth\User::get();
 //    dd($usrs);
 //    function get_extension($file_name){
 //        return substr(strrchr($file_name, '.'), 1);
 //    }
-    //foreach ($usrs as $user){
-//        echo $user['id']."<br/>";
-       // $img = \App\Models\Upload::where('user_id',$user['id'])->first();
-        //if(!empty($img)){
-//            echo "用户名：".$user['name'].'<br>'."图片名:".$img->name."<br>"."图片路径".$img->path;
-//            echo "<br>文件后缀:".$img->extension;
-//            echo "<br>".time()."<br>".strtotime($img->created_at);
-//            $day = (time()-strtotime($img->created_at))/(60*60*24);
-//            echo "<br>".(floor($day));
-        //}
-    //}
+    foreach ($usrs as $user){
+        echo $user['id']."<br/>";
+        $img = \App\Models\Upload::where('user_id',$user['id'])
+                ->orderBy('id','desc')
+                ->first();
+        if(!empty($img)){
+            echo "用户名：".$user['name'].'<br>'."图片名:".$img->name."<br>"."图片路径".$img->path;
+            echo "<br>文件后缀:".$img->extension.'<br>';
+            if (file_exists($img->path)) {
+                // 第二种读取方式
+                $con=file_get_contents($img->path);
+                // 替换
+                $con=str_replace("\r\n","<br>",$con);
+                echo "<hr>$con";
+//                dd();
+            }
+        }
+    }
 
 
 ?>
@@ -104,6 +111,33 @@
                                       </div>
                                   </div>
                               </li>
+                      @endif
+                      @if($img->extension=='txt')
+                              <div class="row" style="margin-top: 10px;">
+                                  <div class="col-md-12">
+                                      <div class="box box-primary">
+                                          <div class="box-header">
+                                              <h3 class="box-title"><i class="fa fa-code"></i> Timeline Markup</h3>
+                                          </div>
+                                          <div class="box-body">
+                  <pre style="font-weight: 600;">
+<?php
+if (file_exists($img->path)) {
+  // 第二种读取方式
+  $con=file_get_contents($img->path);
+  // 替换
+  $con=str_replace("\r\n","<br>",$con);
+  echo "$con";
+}
+?>
+                  </pre>
+                                          </div>
+                                          <!-- /.box-body -->
+                                      </div>
+                                      <!-- /.box -->
+                                  </div>
+                                  <!-- /.col -->
+                              </div>
                       @endif
                   @endif
               @endforeach
