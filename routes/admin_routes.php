@@ -26,7 +26,7 @@ if(\Dwij\Laraadmin\Helpers\LAHelper::laravel_ver() == 5.3) {
 
 
 
-Route::group(['as' => $as, 'middleware' => ['auth']], function () {
+Route::group(['as' => $as, 'middleware' => ['auth','permission:ADMIN_PANEL']], function () {
 	
 
 	/* ================== Dashboard ================== */
