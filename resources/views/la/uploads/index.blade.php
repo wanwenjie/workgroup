@@ -294,7 +294,7 @@
       </div>
       <!-- /.row -->
 
-    <div style="padding: 10px 0px; text-align: center;"><div class="text-muted">Excuse the ads! We need some help to keep our site up.</div><script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><div class="visible-xs visible-sm"><!-- AdminLTE --><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="5866534244"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="hidden-xs hidden-sm"><!-- Home large leaderboard --><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="1170479443"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></section>
+    <div style="padding: 10px 0px; text-align: center;"><div class="text-muted">&copy;Powered By Nautilus</div><script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><div class="visible-xs visible-sm"><!-- AdminLTE --><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="5866534244"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="hidden-xs hidden-sm"><!-- Home large leaderboard --><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="1170479443"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></section>
 
 <div class="modal fade" id="EditFileModal" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document" style="width:90%;">
@@ -365,7 +365,8 @@ $(function () {
 	@la_access("Uploads", "create")
 	fm_dropzone_main = new Dropzone("#fm_dropzone_main", {
         maxFilesize: 2,
-        acceptedFiles: "image/*,application/pdf",
+//        指明上传的文件类型
+        acceptedFiles: "image/*,application/pdf,.txt,html",
         init: function() {
             this.on("complete", function(file) {
                 this.removeFile(file);
