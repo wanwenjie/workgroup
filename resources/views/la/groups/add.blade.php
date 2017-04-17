@@ -15,18 +15,26 @@
                 <form class="form-horizontal">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">群名称</label>
+                      <label class="col-sm-2 control-label">群名称</label>
 
                       <div class="col-sm-10">
                         <input type="email" class="form-control" id="inputEmail3" placeholder="group_name">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">群组图片</label>
+                      <label class="col-sm-2 control-label">群组图片</label>
                       <div class="col-sm-10">
-                        <input type="file" id="exampleInputFile">
+                        <a class="btn btn-default btn_upload_image" file_type="image" selecter="profile_image">Upload <i class="fa fa-cloud-upload"></i></a>
                       </div>
                     </div>
+
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">群组描述</label>
+                      <div class="col-sm-10">
+                        <input type="des" class="form-control" id="des" placeholder="group_des">
+                      </div>
+                    </div>
+
                   </div>
                   <!-- /.box-body -->
                   <div class="box-footer">

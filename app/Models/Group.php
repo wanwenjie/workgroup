@@ -14,8 +14,6 @@ class Group extends Model
     use SoftDeletes;
 	
 	protected $table = 'groups';
-
-
 	
 	protected $hidden = [
         

@@ -6,7 +6,6 @@
 
 @section('main-content')
 <!-- 找的到就显示信息 -->
-@for($i=0;$i<count($groups);$i++)
 <div class="box box-widget widget-user-2">
   <!-- Add the bg color to the header using any of the bg-* classes -->
   <div class="widget-user-header bg-yellow">
@@ -14,7 +13,7 @@
       <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
     </div>
     <!-- /.widget-user-image -->
-    <h3 class="widget-user-username">{{$groups[$i]->name}}  </h3>
+    <h3 class="widget-user-username">鹦鹉螺团队</h3>
     <h5 class="widget-user-desc">有理想有抱负的热血青年</h5>
     <button type="button" class="btn bg-olive btn-flat">申请加入</button>
   </div>
@@ -27,10 +26,8 @@
     </ul>
   </div>
 </div>
-@endfor
 
 <!-- 找不到 -->
-@if(count($groups)==0)
 <div class="box-body">
     <div class="alert alert-danger alert-dismissible">
       <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -38,7 +35,6 @@
       我们没有找到你需要的群组
     </div>
   </div>
-@endif
 @endsection
 
 

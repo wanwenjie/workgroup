@@ -18,10 +18,9 @@
             </div>
         @endif
 
-        <!-- 搜索框 -->
+        <!-- search form (Optional) -->
         @if(LAConfigs::getByKey('sidebar_search'))
-        <form action="/groups/search" method="post" class="sidebar-form">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <form action="/admin/search_group" method="get" class="sidebar-form">
             <div class="input-group">
 	                <input type="text" name="q" class="form-control" placeholder="Search Group"/>
               <span class="input-group-btn">

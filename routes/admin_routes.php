@@ -26,7 +26,7 @@ if(\Dwij\Laraadmin\Helpers\LAHelper::laravel_ver() == 5.3) {
 
 
 
-Route::group(['as' => $as, 'middleware' => ['auth']], function () {
+Route::group(['as' => $as, 'middleware' => ['auth','permission:ADMIN_PANEL']], function () {
 	
 
 	/* ================== Dashboard ================== */
@@ -70,7 +70,7 @@ Route::group(['as' => $as, 'middleware' => ['auth']], function () {
 	
 	/* ================== Groups ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/groups', 'LA\GroupsController');
-	Route::get(config('laraadmin.adminRoute') . '/department_dt_ajax', 'LA\GroupsController@dtajax');
+	Route::get(config('laraadmin.adminRoute') . '/group_dt_ajax', 'LA\GroupsController@dtajax');
 	Route::get(config('laraadmin.adminRoute') . '/add_group', 'LA\GroupsController@add');
 	Route::get(config('laraadmin.adminRoute') . '/search_group', 'LA\GroupsController@search');
 
