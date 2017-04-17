@@ -16,6 +16,7 @@ use Datatables;
 use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
+use TomLingham\Searchy\Facades\Searchy;
 
 use App\Models\Group;
 
@@ -23,7 +24,7 @@ class GroupsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'tags', 'color'];
+	public $listing_cols = ['id', 'name', 'path', 'pic'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns
@@ -252,8 +253,16 @@ class GroupsController extends Controller
 		return view('la.groups.add');
 	}
 
-	public function search() {
-		return view('la.groups.search');
+	public function search(Request  $request) {
+        //$groups = Searchy::search('groups')->fields('name')->query('BAT')->get();
+        $keywords=$request->input("q");
+        $groups=array();
+        if ( $keywords!=null){
+            $groups = DB::table('groups')->where('name','like','%'.$keywords.'%')->get();
+        }
+		return view('la.groups.search',[
+        'groups'=> $groups,
+        ]);
 	}
 
 	public function assign() {
