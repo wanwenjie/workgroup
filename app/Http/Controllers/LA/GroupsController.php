@@ -23,7 +23,7 @@ class GroupsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'tags', 'color'];
+	public $listing_cols = ['id', 'name','path','pic'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns
@@ -254,5 +254,10 @@ class GroupsController extends Controller
 
 	public function search() {
 		return view('la.groups.search');
+	}
+
+	public function assign() {
+
+		return view('la.groups.assign');
 	}
 }
