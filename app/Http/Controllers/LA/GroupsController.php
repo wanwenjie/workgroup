@@ -264,6 +264,18 @@ class GroupsController extends Controller
         'groups'=> $groups,
         ]);
 	}
+	public  function searchEmployees(Request $request){
+        $keywords=$request->input("q");
+        $employees=array();
+        if ( $keywords!=null){
+            $employees = DB::table('employees')->where('name','like','%'.$keywords.'%')->get();
+        }
+        return view('la.groups.add',[
+            'employees'=> $employees,
+        ]);
+
+    }
+
 
 	public function assign() {
 

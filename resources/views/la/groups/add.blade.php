@@ -15,14 +15,13 @@
                 <form class="form-horizontal">
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">群名称</label>
-
+                      <label for="name" class="col-sm-2 control-label">群名称</label>
                       <div class="col-sm-10">
-                        <input type="email" class="form-control" id="inputEmail3" placeholder="group_name">
+                          <input type="text" class="form-control" id="name" placeholder="请输入名称">
                       </div>
                     </div>
                     <div class="form-group">
-                      <label for="inputEmail3" class="col-sm-2 control-label">群组图片</label>
+                      <label for="inputfile" class="col-sm-2 control-label">群组图片</label>
                       <div class="col-sm-10">
                         <input type="file" id="exampleInputFile">
                       </div>
@@ -37,7 +36,10 @@
               </form>
               </div>
               <!-- /.tab-pane -->
+
               <div class="tab-pane" id="tab_2">
+                <form action="/groups/searchEmployees" method="post" >
+                  <input type="hidden" name="_token" value="{{ csrf_token() }}">
                 <div class="tab-pane active" id="tab_1">
                 <div class="container">
                 <div class="input-group">
@@ -48,10 +50,43 @@
                   </div>
                 </div>
               </div>
+              </form>
+                @if(isset($employees))
+                  @for($i=0;$i<count($employees);$i++)
+                    <div class="box box-widget widget-user-2">
+                      <!-- Add the bg color to the header using any of the bg-* classes -->
+                      <div class="widget-user-header bg-yellow">
+                        <div class="widget-user-image">
+                          <img class="img-circle" src="../dist/img/user7-128x128.jpg" alt="User Avatar">
+                        </div>
+                        <!-- /.widget-user-image -->
+                        <h3 class="widget-user-username">{{$employees[$i]->name}}  </h3>
+                        <h5 class="widget-user-desc">有理想有抱负的热血青年</h5>
+                        <button type="button" class="btn bg-olive btn-flat">申请加入</button>
+                      </div>
+                    </div>
+                  @endfor
+
+                <!-- 找不到 -->
+                  @if(count($employees)==0)
+                    <div class="box-body">
+                      <div class="alert alert-danger alert-dismissible">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <h4><i class="icon fa fa-ban"></i> sorry！</h4>
+                        我们没有找到你需要的人
+                      </div>
+                    </div>
+                  @endif
+                @endif
             </div>
+
+
             <!-- /.tab-content -->
           </div>
+
 @endsection
+
+
 
 
 

@@ -2,7 +2,8 @@
     <meta charset="UTF-8">
     <title>@hasSection('htmlheader_title')@yield('htmlheader_title') - @endif{{ LAConfigs::getByKey('sitename') }}</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <!-- Bootstrap 3.3.4 -->
+    <!-- Bootstrap 3.3.4 asset()方法用于引入 CSS/JavaScript/images 等文件,文件必须存放在public文件目录下。
+       url()方法生成一个完整的网址。-->
     <link href="{{ asset('la-assets/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
     
     <link href="{{ asset('la-assets/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css" />
