@@ -18,8 +18,11 @@ Route::get('/', function(){
 Auth::routes();
 
 Route::get('/home', 'HomeController@index');
+<<<<<<< HEAD
 Route::any('/groups/search',['uses'=>'LA\GroupsController@search']);
 Route::any('/groups/searchEmployees',['uses'=>'LA\GroupsController@searchEmployees']);
+=======
+>>>>>>> 00470bd13a3bedc4d46001d91b28d7d3ec90805a
 
 /* ================== Homepage + Admin Routes ================== */
 

@@ -108,8 +108,8 @@
 					</div>
 					<div class="panel-body">
 						@la_display($module, 'name')
-						@la_display($module, 'tags')
-						@la_display($module, 'color')
+						@la_display($module, 'path')
+						@la_display($module, 'pic')
 					</div>
 				</div>
 			</div>

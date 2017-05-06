@@ -9,8 +9,7 @@
         "laravel/framework": "5.3.*",
         "dwij/laraadmin": "1.0.40",
         "encore/laravel-admin": "1.3.*",
-        "dwij/laeditor": "0.1.6",
-        "tom-lingham/searchy" : "2.*"
+        "dwij/laeditor": "0.1.6"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

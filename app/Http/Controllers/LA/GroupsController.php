@@ -16,7 +16,6 @@ use Datatables;
 use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
-use TomLingham\Searchy\Facades\Searchy;
 
 use App\Models\Group;
 
@@ -24,7 +23,7 @@ class GroupsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'name', 'path', 'pic'];
+	public $listing_cols = ['id', 'name','path','pic'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns
@@ -85,7 +84,9 @@ class GroupsController extends Controller
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
-			
+
+
+
 			$insert_id = Module::insert("Groups", $request);
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.groups.index');
@@ -249,20 +250,14 @@ class GroupsController extends Controller
 	}
 
 
-	public function add(){
-		return view('la.groups.add');
-	}
-
-	public function search(Request  $request) {
-        //$groups = Searchy::search('groups')->fields('name')->query('BAT')->get();
-        $keywords=$request->input("q");
-        $groups=array();
-        if ( $keywords!=null){
-            $groups = DB::table('groups')->where('name','like','%'.$keywords.'%')->get();
-        }
-		return view('la.groups.search',[
-        'groups'=> $groups,
-        ]);
+	public function group(){
+		$module = Module::get('Groups');
+		
+		return View('la.groups.add', [
+			'show_actions' => $this->show_action,
+			'listing_cols' => $this->listing_cols,
+			'module' => $module
+		]);
 	}
 	public  function searchEmployees(Request $request){
         $keywords=$request->input("q");
@@ -277,8 +272,5 @@ class GroupsController extends Controller
     }
 
 
-	public function assign() {
-
-		return view('la.groups.assign');
-	}
 }
+

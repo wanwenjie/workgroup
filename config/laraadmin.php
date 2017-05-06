@@ -3,7 +3,7 @@
  * Config genrated using LaraAdmin
  * Help: http://laraadmin.com
  */
-
+/*laradmin权限管理文件*/
 return [
     
 	/*
@@ -24,6 +24,7 @@ return [
     | 
     */
     'uploads' => [
+//        此设置为true 所有的文件只能由上传者看到
         'private_uploads' => false,
         'default_public' => false,
         'allow_filename_change' => true
