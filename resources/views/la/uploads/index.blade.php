@@ -1,14 +1,14 @@
 @extends("la.layouts.app")
 
 @section("contentheader_title", "上传文件")
-@section("contentheader_description", "Uploaded images & files")
+@section("contentheader_description", "已上传文件/图片")
 @section("section", "上传文件")
 @section("sub_section", "Listing")
-@section("htmlheader_title", "Uploaded images & files")
+@section("htmlheader_title", "已上传文件/图片")
 
 @section("headerElems")
 @la_access("Uploads", "create")
-	<button id="AddNewUploads" class="btn btn-success btn-sm pull-right">Add New</button>
+	<button id="AddNewUploads" class="btn btn-success btn-sm pull-right">添加新文件</button>
 @endla_access
 @endsection
 
@@ -27,7 +27,7 @@
 <form action="{{ url(config('laraadmin.adminRoute') . '/upload_files') }}" id="fm_dropzone_main" enctype="multipart/form-data" method="POST">
     {{ csrf_field() }}
     <a id="closeDZ1"><i class="fa fa-times"></i></a>
-    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>Drop files here to upload</div>
+    <div class="dz-message"><i class="fa fa-cloud-upload"></i><br>将文件拖拽至此以上传</div>
 </form>
 
 <div class="box box-success">
@@ -46,8 +46,33 @@
         <small>example</small>
       </h1>
 </section>
+<?php
+    //$usrs=\Illuminate\Foundation\Auth\User::get();
+//    dd($usrs);
+//    function get_extension($file_name){
+//        return substr(strrchr($file_name, '.'), 1);
+//    }
+    //foreach ($usrs as $user){
+//        echo $user['id']."<br/>";
+       // $img = \App\Models\Upload::where('user_id',$user['id'])->first();
+        //if(!empty($img)){
+//            echo "用户名：".$user['name'].'<br>'."图片名:".$img->name."<br>"."图片路径".$img->path;
+//            echo "<br>文件后缀:".$img->extension;
+//            echo "<br>".time()."<br>".strtotime($img->created_at);
+//            $day = (time()-strtotime($img->created_at))/(60*60*24);
+//            echo "<br>".(floor($day));
+        //}
+    //}
 
+
+?>
+
+
+
+{{--下面给的只是一个例子，具体内容需要自己更改--}}
+{{--这里的文件上传有问题--}}
 <!-- 上传文件时间线 -->
+{{--需要用blade模板引擎获取--}}
 <section class="content">
 
       <!-- row -->
@@ -55,14 +80,53 @@
         <div class="col-md-12">
           <!-- The time line -->
           <ul class="timeline">
+          @foreach($imgs as $img)
+              @foreach($users as $usr)
+                  @if($usr['id']==$img['user_id'])
+                      {{--找到匹配的文件和对应的路径--}}
+                      @if($img->extension=='jpg')
+                          {{--图片时间线样式--}}
+                              <li class="time-label">
+                                      <span class="bg-red">
+                                        {{$img->updated_at}}
+                                      </span>
+                              </li>
+                              <li>
+                                  <i class="fa fa-camera bg-purple"></i>
+
+                                  <div class="timeline-item">
+                                      <span class="time"><i class="fa fa-clock-o"></i> {{floor((time()-strtotime($img->created_at))/(60*60*24))}} days ago</span>
+
+                                      <h3 class="timeline-header"><a href="#">{{$usr->name}}</a> uploaded new photos</h3>
+
+                                      <div class="timeline-body">
+                                          <img src="{{ url('files/'.$img->hash.'/'.$img->name)}}" alt="{{ $img->caption }}" class="margin">
+                                      </div>
+                                  </div>
+                              </li>
+                      @endif
+                  @endif
+              @endforeach
+          @endforeach
+
+
+
+
+
+
+
+
+                {{--**********************************华丽的分割线，下面是妖艳的贱货********************************--}}
             <!-- timeline time label -->
             <li class="time-label">
                   <span class="bg-red">
-                    10 Feb. 2014
+                    {{date("Y-m-d H")}}
                   </span>
             </li>
             <!-- /.timeline-label -->
-            <!-- timeline item -->
+
+
+            <!-- timeline item  这是一个邮件-->
             <li>
               <i class="fa fa-envelope bg-blue"></i>
 
@@ -84,6 +148,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-user bg-aqua"></i>
@@ -95,6 +161,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-comments bg-yellow"></i>
@@ -115,6 +183,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline time label -->
             <li class="time-label">
                   <span class="bg-green">
@@ -122,6 +192,8 @@
                   </span>
             </li>
             <!-- /.timeline-label -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-camera bg-purple"></i>
@@ -140,6 +212,8 @@
               </div>
             </li>
             <!-- END timeline item -->
+
+
             <!-- timeline item -->
             <li>
               <i class="fa fa-video-camera bg-maroon"></i>
@@ -220,7 +294,7 @@
       </div>
       <!-- /.row -->
 
-    <div style="padding: 10px 0px; text-align: center;"><div class="text-muted">Excuse the ads! We need some help to keep our site up.</div><script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><div class="visible-xs visible-sm"><!-- AdminLTE --><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="5866534244"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="hidden-xs hidden-sm"><!-- Home large leaderboard --><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="1170479443"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></section>
+    <div style="padding: 10px 0px; text-align: center;"><div class="text-muted">&copy;Powered By Nautilus</div><script async="" src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script><div class="visible-xs visible-sm"><!-- AdminLTE --><ins class="adsbygoogle" style="display:inline-block;width:300px;height:250px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="5866534244"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div><div class="hidden-xs hidden-sm"><!-- Home large leaderboard --><ins class="adsbygoogle" style="display:inline-block;width:728px;height:90px" data-ad-client="ca-pub-4495360934352473" data-ad-slot="1170479443"></ins><script>(adsbygoogle = window.adsbygoogle || []).push({});</script></div></div></section>
 
 <div class="modal fade" id="EditFileModal" role="dialog" aria-labelledby="myModalLabel">
 	<div class="modal-dialog" role="document" style="width:90%;">
@@ -291,7 +365,8 @@ $(function () {
 	@la_access("Uploads", "create")
 	fm_dropzone_main = new Dropzone("#fm_dropzone_main", {
         maxFilesize: 2,
-        acceptedFiles: "image/*,application/pdf",
+//        指明上传的文件类型
+        acceptedFiles: "image/*,application/pdf,.txt,html",
         init: function() {
             this.on("complete", function(file) {
                 this.removeFile(file);

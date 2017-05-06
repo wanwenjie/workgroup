@@ -1,5 +1,5 @@
 @extends('la.layouts.app')
-
+{{--文件操作js--}}
 @section('htmlheader_title')
 	Code Editor
 @endsection
@@ -8,7 +8,7 @@
 <div id="laeditor" class="row">
 	<div class="col-md-2 col-sm-3">
 		<div class="la-header">
-			LA Editor
+			群组文件操作
 			<!--<div class="la-dir">/Applications/MAMP/htdocs</div>-->
 		</div>
 		<div class="la-file-tree">
@@ -39,11 +39,12 @@ var laeditor = null;
 var cntFile;
 var modelist = ace.require("ace/ext/modelist");
 var $laetabs = $(".laeditor-tabs");
-
+//文件管理使用了jQuery的file tree来显示控制文件，下面是初始化的一些步骤，等待群组管理分配地址
 $(function () {
-	// Start Jquery File Tree
+	// 初始化文件树
 	$('.la-file-tree').fileTree({
-		root: '/',
+//        此处更改组目录
+		root: '../',
 		script: "{{ url(config('laraadmin.adminRoute') . '/laeditor_get_dir?_token=' . csrf_token()) }}"
 	}, function(file) {
 		openFile(file);
@@ -51,7 +52,7 @@ $(function () {
 		// $('.selected-file').text( $('a[rel="'+file+'"]').text() );
 	});
 	
-	// Start Ace editor
+	// 初始化 ace 编辑器
 	laeditor = ace.edit("la-ace-editor");
     laeditor.setTheme("ace/theme/twilight");
     laeditor.session.setMode("ace/mode/javascript");

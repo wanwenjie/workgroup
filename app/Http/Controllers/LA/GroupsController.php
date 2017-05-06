@@ -84,10 +84,6 @@ class GroupsController extends Controller
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
-			$str = 'adcdefghigklmnopqresuvwxyz';
-			$rand = sub_str(str_shuffle($str),0,5);
-			
-			$request->path = date('Ymd',time()).$rand;
 			$insert_id = Module::insert("Groups", $request);
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.groups.index');
@@ -251,16 +247,15 @@ class GroupsController extends Controller
 	}
 
 
-	public function add(){
-		return view('la.groups.add');
+	public function group(){
+		$module = Module::get('Groups');
+		
+		return View('la.groups.add', [
+			'show_actions' => $this->show_action,
+			'listing_cols' => $this->listing_cols,
+			'module' => $module
+		]);
 	}
 
-	public function search() {
-		return view('la.groups.search');
-	}
-
-	public function assign() {
-
-		return view('la.groups.assign');
-	}
 }
+
