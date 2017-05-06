@@ -84,13 +84,9 @@ class GroupsController extends Controller
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
-<<<<<<< HEAD
-=======
-			$str = 'adcdefghigklmnopqresuvwxyz';
-			$rand = sub_str(str_shuffle($str),0,5);
-			
-			$request->path = date('Ymd',time()).$rand;
->>>>>>> master
+
+
+
 			$insert_id = Module::insert("Groups", $request);
 			
 			return redirect()->route(config('laraadmin.adminRoute') . '.groups.index');
