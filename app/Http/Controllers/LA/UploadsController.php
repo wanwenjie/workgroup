@@ -9,6 +9,7 @@ namespace App\Http\Controllers\LA;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 
+use App\Models\Employee;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
@@ -57,16 +58,25 @@ class UploadsController extends Controller
 	 */
 	public function index()
 	{
+
 		$module = Module::get('Uploads');
-		$users = User::get();
+
         $imgs = Upload::get();
+//        当前用户id
+        $em_id = json_decode(Auth::user())->id;
+//        当前用户
+        $now_emp = Employee::find($em_id);
+//        筛选出与当前用户同组的用户
+        $users = Employee::get()->where('group','=',$now_emp->group);
+
 		if(Module::hasAccess($module->id)) {
 			return View('la.uploads.index', [
 				'show_actions' => $this->show_action,
 				'listing_cols' => $this->listing_cols,
 				'module' => $module,
                 'users' => $users,
-                'imgs' => $imgs
+                'imgs' => $imgs,
+                'em_id' => $em_id
 			]);
 		} else {
             return redirect(config('laraadmin.adminRoute')."/");

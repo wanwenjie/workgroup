@@ -40,11 +40,17 @@ var cntFile;
 var modelist = ace.require("ace/ext/modelist");
 var $laetabs = $(".laeditor-tabs");
 //文件管理使用了jQuery的file tree来显示控制文件，下面是初始化的一些步骤，等待群组管理分配地址
+<?php
+//    调出本人所在组的路径
+$em_id = json_decode(Auth::user())->id;
+$now_emp = Employee::find($em_id);
+$group = \App\Models\Group::get()->where('id','=',$now_emp->group);
+?>
 $(function () {
 	// 初始化文件树
 	$('.la-file-tree').fileTree({
 //        此处更改组目录
-		root: '../',
+		root: './{{$group->path}}/',
 		script: "{{ url(config('laraadmin.adminRoute') . '/laeditor_get_dir?_token=' . csrf_token()) }}"
 	}, function(file) {
 		openFile(file);

@@ -48,6 +48,7 @@
 </section>
 <?php
 $usrs=\Illuminate\Foundation\Auth\User::get();
+
 //    dd($usrs);
 //    function get_extension($file_name){
 //        return substr(strrchr($file_name, '.'), 1);
@@ -79,14 +80,16 @@ foreach ($usrs as $user){
 
       <!-- row -->
       <div class="row">
-        <div class="col-md-12">
-          <!-- The time line -->
-          <ul class="timeline">
+          <div class="col-md-12">
+              <!-- The time line -->
+              <ul class="timeline">
+    {{$em_id}}
           @foreach($imgs as $img)
               @foreach($users as $usr)
                   @if($usr['id']==$img['user_id'])
                       {{--找到匹配的文件和对应的路径--}}
                       @if($img->extension=='jpg')
+
                           {{--图片时间线样式--}}
                               <li class="time-label">
                                       <span class="bg-red">
@@ -117,7 +120,7 @@ foreach ($usrs as $user){
           <!-- /.col -->
       </div>
     <!-- /.row -->
-                              <div class="row" style="margin-top: 10px;">
+<div class="row" style="margin-top: 10px;">
                                   <div class="col-md-12">
                                       <div class="box box-primary">
                                           <div class="box-header">
@@ -154,11 +157,14 @@ if (file_exists($img->path)) {
                                   </div>
                                   <!-- /.col -->
                               </div>
+<div class="col-md-12">
+        <!-- The time line -->
+<ul class="timeline">
                       @endif
                   @endif
               @endforeach
           @endforeach
-
+</section>
 
 
 
