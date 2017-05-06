@@ -47,32 +47,27 @@
       </h1>
 </section>
 <?php
-    $usrs=\Illuminate\Foundation\Auth\User::get();
+$usrs=\Illuminate\Foundation\Auth\User::get();
 //    dd($usrs);
 //    function get_extension($file_name){
 //        return substr(strrchr($file_name, '.'), 1);
 //    }
-    foreach ($usrs as $user){
-        echo $user['id']."<br/>";
-        $img = \App\Models\Upload::where('user_id',$user['id'])
-                ->orderBy('id','desc')
-                ->first();
+foreach ($usrs as $user){
+    echo $user['id']."<br/>";
+    $img = \App\Models\Upload::where('user_id',$user['id'])
+            ->orderBy('id','desc')
+            ->first();
         if(!empty($img)){
             echo "用户名：".$user['name'].'<br>'."图片名:".$img->name."<br>"."图片路径".$img->path;
             echo "<br>文件后缀:".$img->extension.'<br>';
             if (file_exists($img->path)) {
-                // 第二种读取方式
-                $con=file_get_contents($img->path);
-                // 替换
-                $con=str_replace("\r\n","<br>",$con);
-                echo "<hr>$con";
-//                dd();
-            }
-        }
-    }
 
+
+   }}}
 
 ?>
+
+
 
 
 
@@ -113,6 +108,15 @@
                               </li>
                       @endif
                       @if($img->extension=='txt')
+                          <!-- END timeline item -->
+                              <li>
+                                  <i class="fa fa-clock-o bg-gray"></i>
+                              </li>
+          </ul>
+        </div>
+          <!-- /.col -->
+      </div>
+    <!-- /.row -->
                               <div class="row" style="margin-top: 10px;">
                                   <div class="col-md-12">
                                       <div class="box box-primary">
@@ -123,11 +127,23 @@
                   <pre style="font-weight: 600;">
 <?php
 if (file_exists($img->path)) {
-  // 第二种读取方式
-  $con=file_get_contents($img->path);
-  // 替换
-  $con=str_replace("\r\n","<br>",$con);
-  echo "$con";
+    // 第三种方式，循环读取，对付大文件
+    $fp=fopen($img->path,"r");
+    // 我们设置一次读取1024个字节
+    $buffer=512;
+    $count = 0;
+    // 一边读一边判断是否达到文件末尾.end of file
+    echo "<hr>";
+    $str="";
+    while ($count<=1) {
+        # code...
+        $str.=fread($fp,$buffer);
+        $count++;
+    }
+    $str=str_replace("\r\n","<br>",$str);
+    iconv("UTF-8","GB2312//IGNORE",$str);
+    echo "$str";
+    fclose($fp);
 }
 ?>
                   </pre>
@@ -151,7 +167,14 @@ if (file_exists($img->path)) {
 
 
                 {{--**********************************华丽的分割线，下面是妖艳的贱货********************************--}}
-            <!-- timeline time label -->
+    <section class="content">
+
+        <!-- row -->
+        <div class="row">
+            <div class="col-md-12">
+                <!-- The time line -->
+                <ul class="timeline">
+<!-- timeline time label -->
             <li class="time-label">
                   <span class="bg-red">
                     {{date("Y-m-d H")}}

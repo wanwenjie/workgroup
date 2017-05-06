@@ -11,6 +11,7 @@ use App\Http\Requests;
 
 use App\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Response as FacadeResponse;
 use Illuminate\Support\Facades\Input;
 use Collective\Html\FormFacade as Form;
@@ -302,6 +303,7 @@ class UploadsController extends Controller
 					return response()->json([
 						'status' => "success"
 					]);
+
 	
 				} else {
 					return response()->json([
@@ -430,12 +432,13 @@ class UploadsController extends Controller
 	
 					// Update Caption
 					$upload->delete();
-	
+
 					return response()->json([
 						'status' => "success"
 					]);
-	
-				} else {
+//                    return redirect()->back();
+
+                } else {
 					return response()->json([
 						'status' => "failure",
 						'message' => "Unauthorized Access 1"
@@ -453,5 +456,6 @@ class UploadsController extends Controller
 				'message' => "Unauthorized Access"
 			]);
 		}
+
     }
 }
