@@ -36,7 +36,7 @@ class UploadsController extends Controller
 	public function __construct() {
 		// for authentication (optional)
 		$this->middleware('auth', ['except' => 'get_file']);
-		
+
 		$module = Module::get('Uploads');
 		$listing_cols_temp = array();
 		foreach ($this->listing_cols as $col) {

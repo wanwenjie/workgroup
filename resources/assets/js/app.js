@@ -5,7 +5,7 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-require('./bootstrap');
+//require('./bootstrap');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -13,8 +13,23 @@ require('./bootstrap');
  * the application, or feel free to tweak this setup for your needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
-const app = new Vue({
-    el: '#app'
+// const app = new Vue({
+//     el: '#app'
+// });
+
+
+window.Pusher = require('pusher-js');
+
+import Echo from "laravel-echo"
+
+
+
+window.echo = new Echo({
+    broadcaster: 'pusher',
+    key: '17ed5c6268b322851fbc',
+    cluster: 'ap1',//这个很重要，死在上面两回了
+    encrypted: true
 });
+

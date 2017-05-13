@@ -13,11 +13,12 @@
 
 <!-- AdminLTE App -->
 <script src="{{ asset('la-assets/js/app.min.js') }}" type="text/javascript"></script>
-
 <script src="{{ asset('la-assets/plugins/stickytabs/jquery.stickytabs.js') }}" type="text/javascript"></script>
 <script src="{{ asset('la-assets/plugins/slimScroll/jquery.slimscroll.min.js') }}" type="text/javascript"></script>
 
-
+<!-- app.js -->
+<script type="text/javascript" src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('la-assets/js/echo.js') }}" type="text/javascript"></script>
 
 <!-- Optionally, you can add Slimscroll and FastClick plugins.
       Both of these plugins are recommended to enhance the

@@ -11,7 +11,8 @@ class EncryptCookies extends BaseEncrypter
      *
      * @var array
      */
+    //使之前端可以获取cookie（不加密的）
     protected $except = [
-        //
+        'group_id',
     ];
 }

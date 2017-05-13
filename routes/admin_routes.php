@@ -36,6 +36,9 @@ Route::group(['as' => $as, 'middleware' => ['auth','permission:ADMIN_PANEL']], f
 
 	/* ================== chat ================== */
 	Route::get(config('laraadmin.adminRoute') . '/chat', 'LA\ChatController@index');
+	Route::post(config('laraadmin.adminRoute') . '/chat', 'LA\ChatController@send');
+	Route::get(config('laraadmin.adminRoute') . '/test', 'LA\ChatController@test');
+	Route::get(config('laraadmin.adminRoute') . '/s', 'LA\ChatController@s');
 
 
 	/* ================== assign ================== */
@@ -78,7 +81,7 @@ Route::group(['as' => $as, 'middleware' => ['auth','permission:ADMIN_PANEL']], f
 	Route::resource(config('laraadmin.adminRoute') . '/employees', 'LA\EmployeesController');
 	Route::get(config('laraadmin.adminRoute') . '/employee_dt_ajax', 'LA\EmployeesController@dtajax');
 	Route::post(config('laraadmin.adminRoute') . '/change_password/{id}', 'LA\EmployeesController@change_password');
-	
+	Route::post(config('laraadmin.adminRoute') . '/employee/search', 'LA\EmployeesController@search');
 
 	/* ================== Organizations ================== */
 	Route::resource(config('laraadmin.adminRoute') . '/organizations', 'LA\OrganizationsController');

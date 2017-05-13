@@ -78,17 +78,19 @@ class GroupsController extends Controller
 		if(Module::hasAccess("Groups", "create")) {
 		
 			$rules = Module::validateRules("Groups", $request);
-			
-			$validator = Validator::make($request->all(), $rules);
-			
+			$validator = Validator::make($request->all(), $rules);	
+
 			if ($validator->fails()) {
 				return redirect()->back()->withErrors($validator)->withInput();
 			}
 
-
+			//新建路径
+			$path = storage_path('uploads')."/".$request->path;
+			if(!is_dir($path)){
+				mkdir($path);
+			}
 
 			$insert_id = Module::insert("Groups", $request);
-			
 			return redirect()->route(config('laraadmin.adminRoute') . '.groups.index');
 			
 		} else {

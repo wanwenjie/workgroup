@@ -336,4 +336,11 @@ class EmployeesController extends Controller
 		
 		return redirect(config('laraadmin.adminRoute') . '/employees/'.$id.'#tab-account-settings');
 	}
+
+	public function search(Request $request){
+		$name = $request->name;
+
+		$var = $name.'%';
+		return DB::table('employees')->where('name','like',$var)->get();
+	}
 }
