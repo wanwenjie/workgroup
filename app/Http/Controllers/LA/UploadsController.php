@@ -34,9 +34,13 @@ class UploadsController extends Controller
 	public $show_action = true;
 	public $view_col = 'name';
 	public $listing_cols = ['id', 'name', 'path', 'extension', 'caption', 'user_id'];
-	
+    public $em_id;
+    public $now_emp;
+    public $group;
 	public function __construct() {
-		// for authentication (optional)
+
+
+        // for authentication (optional)
 		$this->middleware('auth', ['except' => 'get_file']);
 		
 		$module = Module::get('Uploads');
@@ -49,6 +53,11 @@ class UploadsController extends Controller
 			}
 		}
 		$this->listing_cols = $listing_cols_temp;
+
+//        $this->em_id = json_decode(Auth::user())->id;
+//        $this->now_emp = Employee::find($this->em_id);
+//        $this->group = \App\Models\Group::get()->where('id','=',$this->now_emp->group);
+
 	}
 	
 	/**
@@ -58,16 +67,21 @@ class UploadsController extends Controller
 	 */
 	public function index()
 	{
-
+        $this->em_id = json_decode(Auth::user())->id;
+        $this->now_emp = Employee::find($this->em_id);
+        $this->group = \App\Models\Group::get()->where('id','=',$this->now_emp->group)->first();
+//        dd($this->group->id);
+//        print_r(Auth::user());
+        if(!isset(json_decode(Auth::user())->id)){
+            echo "找不到當前user";
+            dd(json_decode(Auth::user()));
+            exit();
+        }
 		$module = Module::get('Uploads');
 
         $imgs = Upload::get();
-//        当前用户id
-        $em_id = json_decode(Auth::user())->id;
-//        当前用户
-        $now_emp = Employee::find($em_id);
-//        筛选出与当前用户同组的用户
-        $users = Employee::get()->where('group','=',$now_emp->group);
+
+        $users = Employee::get()->where('group','=',$this->group->id);
 
 		if(Module::hasAccess($module->id)) {
 			return View('la.uploads.index', [
@@ -76,7 +90,7 @@ class UploadsController extends Controller
 				'module' => $module,
                 'users' => $users,
                 'imgs' => $imgs,
-                'em_id' => $em_id
+                'em_id' => $this->em_id
 			]);
 		} else {
             return redirect(config('laraadmin.adminRoute')."/");
@@ -127,7 +141,7 @@ class UploadsController extends Controller
                 if(!is_numeric($size)) {
                     $size = 150;
                 }
-                $thumbpath = storage_path("thumbnails/".basename($upload->path)."-".$size."x".$size);
+                $thumbpath = storage_path("thumbnails/".$this->group->path.'/'.basename($upload->path)."-".$size."x".$size);
                 
                 if(File::exists($thumbpath)) {
                     $path = $thumbpath;
@@ -164,7 +178,6 @@ class UploadsController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function upload_files() {
-        
 		if(Module::hasAccess("Uploads", "create")) {
 			$input = Input::all();
 			
@@ -180,9 +193,13 @@ class UploadsController extends Controller
 				*/
 				$file = Input::file('file');
 				
-				// print_r($file);
-				
-				$folder = storage_path('uploads');
+//				 print_r($file);
+                $this->em_id = json_decode(Auth::user())->id;
+                $this->now_emp = Employee::find($this->em_id);
+                $this->group = \App\Models\Group::get()->where('id','=',$this->now_emp->group)->first();
+                $path="uploads/".$this->group->path."/";
+
+				$folder = storage_path($path);
 				$filename = $file->getClientOriginalName();
 	
 				$date_append = date("Y-m-d-His-");
@@ -439,10 +456,10 @@ class UploadsController extends Controller
 			$upload = Upload::find($file_id);
 			if(isset($upload->id)) {
 				if($upload->user_id == Auth::user()->id || Entrust::hasRole('SUPER_ADMIN')) {
-	
+	                $path=$upload->path;
 					// Update Caption
 					$upload->delete();
-
+                    unlink($path);
 					return response()->json([
 						'status' => "success"
 					]);

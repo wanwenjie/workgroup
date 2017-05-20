@@ -43,14 +43,17 @@ var $laetabs = $(".laeditor-tabs");
 <?php
 //    调出本人所在组的路径
 $em_id = json_decode(Auth::user())->id;
-$now_emp = Employee::find($em_id);
-$group = \App\Models\Group::get()->where('id','=',$now_emp->group);
+$now_emp = \App\Models\Employee::find($em_id);
+$group = \App\Models\Group::get()->where('id','=',$now_emp->group)->first();
 ?>
 $(function () {
 	// 初始化文件树
 	$('.la-file-tree').fileTree({
 //        此处更改组目录
-		root: './{{$group->path}}/',
+        <?php
+//            dd($group->path);
+        ?>
+		root: './storage/uploads/{{$group->path}}/',
 		script: "{{ url(config('laraadmin.adminRoute') . '/laeditor_get_dir?_token=' . csrf_token()) }}"
 	}, function(file) {
 		openFile(file);

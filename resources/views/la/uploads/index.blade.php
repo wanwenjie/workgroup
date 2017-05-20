@@ -47,7 +47,7 @@
       </h1>
 </section>
 <?php
-$usrs=\Illuminate\Foundation\Auth\User::get();
+/*$usrs=\Illuminate\Foundation\Auth\User::get();
 
 //    dd($usrs);
 //    function get_extension($file_name){
@@ -66,6 +66,8 @@ foreach ($usrs as $user){
 
    }}}
 
+*/
+$flag=0;
 ?>
 
 
@@ -76,18 +78,22 @@ foreach ($usrs as $user){
 {{--这里的文件上传有问题--}}
 <!-- 上传文件时间线 -->
 {{--需要用blade模板引擎获取--}}
-<section class="content">
 
-      <!-- row -->
-      <div class="row">
-          <div class="col-md-12">
-              <!-- The time line -->
-              <ul class="timeline">
-    {{$em_id}}
+
+
+
           @foreach($imgs as $img)
               @foreach($users as $usr)
                   @if($usr['id']==$img['user_id'])
                       {{--找到匹配的文件和对应的路径--}}
+                      @if($flag==0)
+                      <section class="content">
+                      <!-- row -->
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <!-- The time line -->
+                                  <ul class="timeline">
+                                      @endif
                       @if($img->extension=='jpg')
 
                           {{--图片时间线样式--}}
@@ -429,7 +435,7 @@ $(function () {
 	fm_dropzone_main = new Dropzone("#fm_dropzone_main", {
         maxFilesize: 2,
 //        指明上传的文件类型
-        acceptedFiles: "image/*,application/pdf,.txt,html",
+        acceptedFiles: "image/*,application/pdf,.txt,.html",
         init: function() {
             this.on("complete", function(file) {
                 this.removeFile(file);
@@ -499,8 +505,11 @@ $(function () {
             data: $("form.file-info-form").serialize(),
             success: function( data ) {
                 console.log(data);
+
                 loadUploadedFiles();
+//                windows.location.reload();
             }
+
         });
         
     });
@@ -547,6 +556,7 @@ $(function () {
                     console.log(data);
                     loadUploadedFiles();
                     $("#EditFileModal").modal('hide');
+                    window.location.reload();
                 }
             });
         }
