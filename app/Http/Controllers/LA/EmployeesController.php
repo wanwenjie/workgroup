@@ -339,8 +339,13 @@ class EmployeesController extends Controller
 
 	public function search(Request $request){
 		$name = $request->name;
+		$group_id = $request->group;
+		$emp_ids = DB::table('emp_groups')->where('group_id',$group_id)->pluck('emp_id');
+		$var = '%'.$name.'%';
+		return DB::table('employees')->where('name','like',$var)->whereNotIn('id',$emp_ids)->get();
+	}
 
-		$var = $name.'%';
-		return DB::table('employees')->where('name','like',$var)->get();
+	public function send(Request $request){
+		
 	}
 }

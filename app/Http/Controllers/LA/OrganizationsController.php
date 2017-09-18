@@ -23,7 +23,7 @@ class OrganizationsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'profile_image', 'name', 'email', 'phone', 'website', 'assigned_to', 'city'];
+	public $listing_cols = ['id','name','assigned_to', 'connect_since','dead_line','group','status','sharer','project'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns
@@ -47,6 +47,7 @@ class OrganizationsController extends Controller
 		$module = Module::get('Organizations');
 		
 		if(Module::hasAccess($module->id)) {
+
 			return View('la.organizations.index', [
 				'show_actions' => $this->show_action,
 				'listing_cols' => $this->listing_cols,
@@ -75,23 +76,9 @@ class OrganizationsController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		if(Module::hasAccess("Organizations", "create")) {
 		
-			$rules = Module::validateRules("Organizations", $request);
-			
-			$validator = Validator::make($request->all(), $rules);
-			
-			if ($validator->fails()) {
-				return redirect()->back()->withErrors($validator)->withInput();
-			}
-			
-			$insert_id = Module::insert("Organizations", $request);
-			
-			return redirect()->route(config('laraadmin.adminRoute') . '.organizations.index');
-			
-		} else {
-			return redirect(config('laraadmin.adminRoute')."/");
-		}
+		$insert_id = Module::insert("Organizations", $request);
+		return 'success';
 	}
 
 	/**
@@ -259,5 +246,32 @@ class OrganizationsController extends Controller
 		}
 		$out->setData($data);
 		return $out;
+	}
+
+
+	public function find(Request $request){
+		$g_id = $request->g_id;
+		$p_id = $request->p_id;
+		$u_id = $request->u_id;
+		$condition = [
+			'assigned_to' => $u_id,
+			'group' => $g_id,
+			'project' => $p_id
+		];
+		return DB::table('organizations')->where($condition)->get();
+	}
+
+	public function status(Request $request){
+		$id = $request->id;
+		$status = $request->status;
+		$str = substr($status,strpos($status,',')+1);
+		$orga = Organization::find($id);
+		$orga->status = $str.'%';
+		if($orga->save()){
+			return 'success';
+		}else{
+			return 'fail';
+		}
+
 	}
 }

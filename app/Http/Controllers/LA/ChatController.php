@@ -18,13 +18,15 @@ class ChatController extends Controller
     	$group_id = $em->group;
     	$members = DB::table('employees')->where('group',$group_id)->get();
     	$count = count($members);
-    	return view('la.chat.index',['members'=>$members,'count'=>$count,'user'=>$em_id,'group'=>$group_id]);
+        $message = DB::table('chat_messages')->where('group_id',$group_id)->get();
+    	return view('la.chat.index',['members'=>$members,'count'=>$count,'user'=>$em_id,'group'=>$group_id,'messages'=>$message]);
     }
 
     public function send(Request $request){
     	$msg = $request->message;
     	$g_id = $request->group;
     	$u_id = $request->user;
+        $pic = Employee::find($u_id)->pic;
         $name = json_decode(Auth::user())->name;
     	$message = ChatMessage::create([
     		'user_id' => $u_id,
@@ -32,8 +34,16 @@ class ChatController extends Controller
     		'group_id' => $g_id,
     		'message' => $msg
     		]);
+        $info = [
+            'user_id' => $u_id,
+            'name' => $name,
+            'group_id' => $g_id,
+            'message' => $msg,
+            'pic' => $pic,
+            'created_at' => $message->created_at
+            ];
 
-    	event(new ChatMessageWasReceived($message));
+    	event(new ChatMessageWasReceived($info));
     }
 
     public function s(){

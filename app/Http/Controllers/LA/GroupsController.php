@@ -16,14 +16,20 @@ use Datatables;
 use Collective\Html\FormFacade as Form;
 use Dwij\Laraadmin\Models\Module;
 use Dwij\Laraadmin\Models\ModuleFields;
-
+use App\Models\EmpGroup;
 use App\Models\Group;
-
+use App\Mail\InviteMember;
+use App\Mail\RequestGroup;
+use Mail;
+use App\User;
+use App\Models\Employee;
+use Storage;
+use App\Events\JoinGroup;
 class GroupsController extends Controller
 {
 	public $show_action = true;
 	public $view_col = 'name';
-	public $listing_cols = ['id', 'name','path','pic'];
+	public $listing_cols = ['id', 'name','path','pic','created_by'];
 	
 	public function __construct() {
 		// Field Access of Listing Columns
@@ -45,7 +51,6 @@ class GroupsController extends Controller
 	public function index()
 	{
 		$module = Module::get('Groups');
-		
 		if(Module::hasAccess($module->id)) {
 			return View('la.groups.index', [
 				'show_actions' => $this->show_action,
@@ -75,27 +80,30 @@ class GroupsController extends Controller
 	 */
 	public function store(Request $request)
 	{
-		if(Module::hasAccess("Groups", "create")) {
 		
-			$rules = Module::validateRules("Groups", $request);
-			$validator = Validator::make($request->all(), $rules);	
+		
+		$rules = Module::validateRules("Groups", $request);
+		$validator = Validator::make($request->all(), $rules);	
 
-			if ($validator->fails()) {
-				return redirect()->back()->withErrors($validator)->withInput();
-			}
-
-			//新建路径
-			$path = storage_path('uploads')."/".$request->path;
-			if(!is_dir($path)){
-				mkdir($path);
-			}
-
-			$insert_id = Module::insert("Groups", $request);
-			return redirect()->route(config('laraadmin.adminRoute') . '.groups.index');
-			
-		} else {
-			return redirect(config('laraadmin.adminRoute')."/");
+		if ($validator->fails()) {
+			return redirect()->back()->withErrors($validator)->withInput();
 		}
+
+		//新建路径
+		$path = storage_path('uploads')."\\".$request->path;
+		if(!is_dir($path)){
+			mkdir($path);
+		}
+
+		$insert_id = Module::insert("Groups", $request);
+		//创建成功的时候，在群组和成员关系表中添加一条记录
+		EmpGroup::create([
+			'group_id'=>$insert_id,
+			'emp_id'=>$request->created_by,
+			'invite_p' => 1,
+			'assign_p' => 1]);
+		return redirect(config('laraadmin.adminRoute') . '/group');
+			
 	}
 
 	/**
@@ -254,12 +262,126 @@ class GroupsController extends Controller
 
 	public function group(){
 		$module = Module::get('Groups');
-		
+		$user_id = Auth::user()->id;
+		$my_groups = DB::table('groups')->where('created_by',$user_id)->whereNull('deleted_at')->pluck('id','name');
+		$group_ids = DB::table('emp_groups')->where('emp_id',$user_id)->pluck('group_id');
+		$groups = DB::table('groups')->whereIn('id',$group_ids)->pluck('id','name');
+		$info = [];
+		foreach ($my_groups as $key => $value) {
+			array_push($info,$key);
+		}
+		$emp_groups = EmpGroup::where('emp_id',Auth::user()->id)->get();
+		$join_groups = array_except($groups,$info);
 		return View('la.groups.add', [
 			'show_actions' => $this->show_action,
 			'listing_cols' => $this->listing_cols,
-			'module' => $module
+			'module' => $module,
+			'my_groups' => $my_groups,
+			'join_groups' => $join_groups,
+			'emp_groups' => $emp_groups
 		]);
+	}
+
+	public function search(Request $request){
+		$name = $request->name;
+		$var = '%'.$name.'%';
+		$emp_id = Auth::user()->id;
+		$group_ids = DB::table('emp_groups')->where('emp_id',$emp_id)->pluck('group_id');
+		return DB::table('groups')->where('name','like',$var)->whereNotIn('id',$group_ids)->get();
+	}
+
+	public function find($id){
+		return DB::table('groups')->where('id',$id)->get();
+	}
+
+	public function del($id){
+		//连同路径一并删除
+		$group = Group::find($id);
+		$path = $group->path;
+
+		Storage::deleteDirectory($path);
+		return DB::table('groups')->where('id',$id)->delete();
+	}
+
+	public function invite(Request $request){
+		$url = 'http://'.$_SERVER['HTTP_HOST'].'/admin/group/join';
+		$to = $request->to;
+		$user = User::where('name',$to)->first();
+		$from = $request->from;
+		$group = $request->group;
+		$group_obj= Group::where('id',$group)->first();
+		$name = $group_obj->name;
+		$url .= '/'.$group."/".$user->id;
+		$info = [
+			'to' => $to,
+			'from' => $from,
+			'group' => $name,
+			'url' => $url
+		];
+		Mail::to($user)->send(new InviteMember($info));
+		return 'send email success! please wait replay!';
+		
+	}
+
+
+	public function join($id,$to){
+		$emp_name = Employee::find($to)->name;
+		$group_name = Group::find($id)->name;
+		$info = [
+			'group_id' => $id,
+			'info' => $emp_name.' joined '.$group_name.' group'];
+		if(!EmpGroup::where('emp_id',$to)->where('group_id',$id)->first()){
+			EmpGroup::create([
+			'emp_id' => $to,
+			'group_id' => $id ]);
+			event(new JoinGroup($info));
+		}
+		return redirect('/admin/group');
+	}
+
+	public function req(Request $request){
+
+		$url = 'http://'.$_SERVER['HTTP_HOST'].'/admin/group/join';
+		$group_name = $request->name;
+		$user_name = Auth::user()->name;//请求者名称
+		$groups = Group::where('name',$group_name)->first();
+		$emp_id = $groups->created_by;
+		$group_id = $groups->id;
+		$user = User::find($emp_id);
+		$url .= '/'.$group_id.'/'.Auth::user()->id;
+		$info = [
+			'to' => $user->name,
+			'from' => $user_name,
+			'group' => $group_name,
+			'url' => $url
+		];
+		Mail::to($user)->send(new RequestGroup($info));
+		return "send emial success! please wait replay!";
+	}
+
+	public function member($id){
+		$info = [];
+		$emp_ids = DB::table('emp_groups')->where('group_id',$id)->pluck('emp_id');
+		return DB::table('employees')->whereIn('id',$emp_ids)->get();
+	}
+
+	public function permission(Request $request){
+		$eg = EmpGroup::where('emp_id',$request->emp_id)->where('group_id',$request->group_id)->first();
+		$invite_p = $request->invite_p;
+		$assign_p = $request->assign_p;
+		if($invite_p == ''){
+			$invite_p = 0;
+		}
+		if($assign_p == ''){
+			$assign_p = 0;
+		}
+		$eg->invite_p = $invite_p;
+		$eg->assign_p = $assign_p;
+		if($eg->save()){
+			return 'save success!';
+		}else{
+			return 'save failure!';
+		}
 	}
 
 }

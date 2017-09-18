@@ -9,25 +9,21 @@ use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class ChatMessageWasReceived implements ShouldBroadcast
+class JoinGroup implements ShouldBroadcast
 {
     use InteractsWithSockets, SerializesModels;
 
-    public $message;
-    private $group_id;
-
+    public $group_id;
+    public $info;
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct($info)
     {
-        $this->message = $message;
-        $this->group_id = $message['group_id'];
-
-
-
+        $this->info = $info;
+        $this->group_id = $info['group_id'];
     }
 
     /**
@@ -37,7 +33,7 @@ class ChatMessageWasReceived implements ShouldBroadcast
      */
     public function broadcastOn()
     {   
-        $name = 'chat-room.'.$this->group_id;
+        $name = 'group.'.$this->group_id;
         return new Channel($name);
     }
 }

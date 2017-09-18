@@ -36,13 +36,12 @@ class DashboardController extends Controller
      */
     public function index()
     {   
-        
-        if(!Cookie::get('group_id')){
+        if(!Cookie::get('group_id')||!Cookie::get('user_id')){
             //存放全局变量group_id,以便广播使用
             $em_id = json_decode(Auth::user())->id;
             $em = Employee::find($em_id);
             $group_id = $em->group;
-            Cookie::make('user_id',$em_id);
+            Cookie::queue('user_id', $em_id, $minutes = 99999999, $path = null, $domain = null, $secure = false, $httpOnly = false);
             //不加密的cookie，前后端进行交互
             Cookie::queue('group_id', $group_id, $minutes = 99999999, $path = null, $domain = null, $secure = false, $httpOnly = false);
         }

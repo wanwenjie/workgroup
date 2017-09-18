@@ -30,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/';
+    protected $redirectTo = '/admin/group';
 
     /**
      * Create a new controller instance.
@@ -90,19 +90,9 @@ class RegisterController extends Controller
         
         $employee = Employee::create([
             'name' => $data['name'],
-            'designation' => "Junior Admin",
-            'mobile' => "8888888888",
-            'mobile2' => "",
+            'designation' => "Senior Admin",
             'email' => $data['email'],
-            'gender' => 'Male',
-            'group' => 0,
-            'city' => "Pune",
-            'address' => "Karve nagar, Pune 411030",
-            'about' => "About user / biography",
-            'date_birth' => date("Y-m-d"),
-            'date_hire' => date("Y-m-d"),
-            'date_left' => date("Y-m-d"),
-            'salary_cur' => 0,
+            'pic' => "emp".rand(1,10).".jpg",
         ]);
         
         $user = User::create([
@@ -112,7 +102,7 @@ class RegisterController extends Controller
             'context_id' => $employee->id,
             'type' => "Employee",
         ]);
-        $role = Role::where('name', 'SUPER_ADMIN')->first();
+        $role = Role::where('name', 'SENIOR_ADMIN')->first();
         $user->attachRole($role);
     
         return $user;
